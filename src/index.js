@@ -3,14 +3,18 @@ import ReactDOM from "react-dom/client";
 import "./index.css";
 import App from "./App";
 import reportWebVitals from "./reportWebVitals";
-import { BrowserRouter as Router } from "react-router-dom";
+import { BrowserRouter } from "react-router-dom";
+import axios from "axios";
 
 const root = ReactDOM.createRoot(document.getElementById("root"));
+
+axios.defaults.baseURL = "http://192.168.0.113:200";
+
 root.render(
   <React.StrictMode>
-    <Router>
+    <BrowserRouter>
       <App />
-    </Router>
+    </BrowserRouter>
   </React.StrictMode>
 );
 

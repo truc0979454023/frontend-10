@@ -1,4 +1,4 @@
-import { Route, Routes } from "react-router-dom";
+import { BrowserRouter, Route, Routes } from "react-router-dom";
 import Account from "./components/Account";
 import Header from "./components/Header";
 import NotFound from "./components/NotFound";
@@ -10,10 +10,10 @@ function App() {
       <Header />
       <main className="main">
         <Routes>
-          <Route path="/account" exact element={<Account />} />
-          <Route path="/course" exact element={<Course />} />
+          <Route path="/account" element={<Account />} />
+          <Route path="/course" element={<Course />} />
 
-          <Route path="*" exact element={<NotFound />} />
+          <Route path="*" element={<NotFound />} />
         </Routes>
       </main>
     </div>

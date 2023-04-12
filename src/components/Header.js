@@ -5,8 +5,12 @@ const Header = () => {
   return (
     <div className="header">
       <ul>
-        <Link to={"/account"}>Danh sách tài khoản</Link>
-        <Link to={"/course"}>Danh sách khóa học</Link>
+        <Link to={"/account"}>
+          <li>Danh sách tài khoản</li>
+        </Link>
+        <li>
+          <Link to={"/course"}>Danh sách khóa học</Link>
+        </li>
       </ul>
     </div>
   );

@@ -43,6 +43,11 @@ code {
   gap: 24px;
 }
 
+.header ul a {
+  color: white;
+  text-decoration: none;
+}
+
 .header ul li:hover {
   transform: scale(1.05);
   cursor: pointer;
