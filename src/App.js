@@ -24,6 +24,7 @@ import NotFound from "./components/NotFound";
 
 import { Breadcrumb, Layout, Menu, theme } from "antd";
 import { useState } from "react";
+import ToDoList from "./components/ToDoList";
 const { Header, Content, Footer } = Layout;
 const App = () => {
   const {
@@ -37,6 +38,8 @@ const App = () => {
   const dataMenu = [
     { key: "account", label: "Người dùng" },
     { key: "course", label: "Câu hỏi" },
+    { key: "todolist", label: "Danh sách công việc" },
+    // Cũng phải thêm {key:"todolist", label:"ABC"} vào đây
   ];
 
   const onClick = (e) => {
@@ -80,6 +83,7 @@ const App = () => {
           <Routes>
             <Route path="/account" element={<Account />} />
             <Route path="/course" element={<Course />} />
+            <Route path="/todolist" element={<ToDoList />} />
 
             <Route path="*" element={<NotFound />} />
           </Routes>
