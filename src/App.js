@@ -8,6 +8,7 @@ import { useState } from "react";
 import Choise from "./components/Choise";
 import Home from "./components/Home";
 import Subject from "./components/Subject";
+import SubjectDescription from "./components/SubjectDescription";
 const { Header, Content, Footer } = Layout;
 
 const App = () => {
@@ -69,7 +70,11 @@ const App = () => {
             <Route path="/account" element={<Account />} />
             <Route path="/course" element={<Course />} />
             <Route path="/choise" element={<Choise />} />
-            <Route path="/subject" element={<Subject />} />
+            <Route path="subject" element={<Subject />}></Route>
+            <Route
+              path="subject-description"
+              element={<SubjectDescription />}
+            />
 
             <Route path="*" element={<NotFound />} />
           </Routes>

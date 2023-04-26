@@ -1,11 +1,12 @@
 import { Button, Input, Space, Table, Form, message } from "antd";
 import axios from "axios";
 import React, { useEffect, useState } from "react";
-import { Link } from "react-router-dom";
+import { Link, useSearchParams } from "react-router-dom";
 
-const Subject = () => {
+const SubjectDescription = () => {
   // Tạo 1 biến subjects để chứa thông tin các môn thi và setSubjects để cập nhật lại biến subjects
-  const [subjects, setSubjects] = useState([]);
+  const [tests, setTests] = useState([]);
+  const [subject, setSubject] = useState({});
   //   Tạo biến callback và setCallback để xét lại danh sách các môn thi
   const [callBack, setCallBack] = useState(true);
   //   Tạo biến để chứa dữ liệu cập nhật môn thi
@@ -14,6 +15,7 @@ const Subject = () => {
   const [loading, setLoading] = useState(false);
 
   const [form] = Form.useForm();
+  const [searchParams, setSearchParams] = useSearchParams();
 
   //   Hàm lấy danh sách các môn thi và cập nhật nó vô biến subject hàm sẽ được gọi lần đầu component render
   //   và mỗi khi biến callback thay đổi trạng thái
@@ -22,24 +24,26 @@ const Subject = () => {
       try {
         setLoading(true);
         // gọi api lây danh sách các môn thi
-        const res = await axios.get("Subject/list-subject");
+        const res = await axios.get(
+          `dethi/detail-dethi-by-monthi/${searchParams.get("subject_code")}`
+        );
+        console.log(res);
         setLoading(false);
-        setSubjects(res.data.data);
+        setTests(res.data.data.dethi);
+        setSubject(res.data.data.monthi);
       } catch (error) {
         setLoading(false);
         console.log(error);
       }
     }
     fetchData();
-  }, [callBack]);
+  }, [callBack, searchParams]);
 
   //   Hàm giúp xóa các môn thi có tham số đầu vào là môn thi muốn xóa
   const handleDeleteSubject = async (data) => {
     try {
       // gọi api xóa danh sách các môn thi
-      const res = await axios.delete(
-        `Subject/delete-subject/${data.subject_code}`
-      );
+      const res = await axios.delete(`/dethi/delete-dethi/${data.maDeThi}`);
       message.success(res.data.detail);
       setCallBack(!callBack);
     } catch (error) {}
@@ -51,14 +55,15 @@ const Subject = () => {
       let res;
       // dataUpdate nếu có dữ liệu thì chạy hàm cập nhật còn không có dữ liệu chạy hàm tạo
       dataUpdate
-        ? (res = await axios.put(
-            `/Subject/update-subject/${dataUpdate.subject_code}`,
-            {
-              subjectName: data.subjectName,
-            }
-          ))
-        : (res = await axios.post("Subject/create-subject", {
-            subjectName: data.subjectName,
+        ? (res = await axios.put(`dethi/update-dethi/${dataUpdate.maDeThi}`, {
+            tenDeThi: data.tenDeThi,
+            note: data.note,
+            subject_code: subject?.subject_code,
+          }))
+        : (res = await axios.post("/dethi/create-dethi", {
+            tenDeThi: data.tenDeThi,
+            note: data.note,
+            subject_code: subject?.subject_code,
           }));
       message.success(res.data.detail);
       setCallBack(!callBack);
@@ -79,9 +84,19 @@ const Subject = () => {
   //   biến khai báo cái cột của table
   const columns = [
     {
-      title: "Tên môn thi",
-      dataIndex: "subjectName",
-      key: "subjectName",
+      title: "Mã đề thi",
+      dataIndex: "maDeThi",
+      key: "maDeThi",
+    },
+    {
+      title: "Tên đề thi",
+      dataIndex: "tenDeThi",
+      key: "tenDeThi",
+    },
+    {
+      title: "Ghi chú",
+      dataIndex: "note",
+      key: "note",
     },
     {
       title: "Action",
@@ -115,8 +130,8 @@ const Subject = () => {
         autoComplete="off"
       >
         <Form.Item
-          label="Tên môn thi"
-          name="subjectName"
+          label="Tên đề thi"
+          name="tenDeThi"
           rules={[
             {
               required: true,
@@ -126,7 +141,18 @@ const Subject = () => {
         >
           <Input />
         </Form.Item>
-
+        <Form.Item
+          label="Ghi chú"
+          name="note"
+          rules={[
+            {
+              required: true,
+              message: "Please input your question!",
+            },
+          ]}
+        >
+          <Input />
+        </Form.Item>
         <Form.Item>
           <div style={{ display: "flex", gap: "8px" }}>
             <Button disabled={loading} type="primary" htmlType="submit">
@@ -136,9 +162,9 @@ const Subject = () => {
           </div>
         </Form.Item>
       </Form>
-      <Table loading={loading} columns={columns} dataSource={subjects} />
+      <Table loading={loading} columns={columns} dataSource={tests} />
     </div>
   );
 };
 
-export default Subject;
+export default SubjectDescription;
