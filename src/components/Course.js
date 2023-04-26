@@ -6,8 +6,8 @@ const Course = () => {
   const [questions, setQuestions] = useState([]);
   const [callBack, setCallBack] = useState(true);
   const [dataUpdate, setDataUpdate] = useState(null);
-  const [form] = Form.useForm();
   const [loading, setLoading] = useState(false);
+  const [form] = Form.useForm();
 
   useEffect(() => {
     async function fetchData() {
@@ -16,7 +16,10 @@ const Course = () => {
         const res = await axios.get("question/list-question");
         setLoading(false);
         setQuestions(res.data.data);
-      } catch (error) {}
+      } catch (error) {
+        setLoading(false);
+        console.log(error);
+      }
     }
     fetchData();
   }, [callBack]);
@@ -32,14 +35,8 @@ const Course = () => {
   const handleCreateAccount = async (data) => {
     try {
       let res;
-      !dataUpdate
-        ? (res = await axios.post("question/create-question", {
-            title: data.title,
-            question: data.question,
-            result: data.result,
-            point: data.point,
-          }))
-        : (res = await axios.put(
+      dataUpdate
+        ? (res = await axios.put(
             `question/update-question/${dataUpdate.questionCode}`,
             {
               title: data.title,
@@ -47,22 +44,27 @@ const Course = () => {
               result: data.result,
               point: data.point,
             }
-          ));
+          ))
+        : (res = await axios.post("question/create-question", {
+            title: data.title,
+            question: data.question,
+            result: data.result,
+            point: data.point,
+          }));
       message.success(res.data.detail);
       setCallBack(!callBack);
     } catch (error) {}
   };
 
-  const handleUpdateAccount = (account) => {
-    form.setFieldsValue(account);
-    setDataUpdate(account);
+  const handleUpdateAccount = (record) => {
+    form.setFieldsValue(record);
+    setDataUpdate(record);
   };
 
   const handleReset = () => {
     form.resetFields();
     setDataUpdate(null);
   };
-
   const columns = [
     {
       title: "Câu hỏi",
@@ -81,15 +83,22 @@ const Course = () => {
       key: "title",
     },
     {
+      title: "Mã câu hỏi",
+      dataIndex: "questionCode",
+      key: "questionCode",
+    },
+    {
       title: "Điểm",
       dataIndex: "point",
       key: "point",
+      sorter: (a, b) => a.point - b.point,
     },
 
     {
       title: "Action",
       key: "action",
       width: 200,
+
       render: (_, record) => (
         <Space>
           <Button onClick={() => handleUpdateAccount(record)}>Sửa</Button>

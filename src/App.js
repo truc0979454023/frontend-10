@@ -1,32 +1,15 @@
 import { Route, Routes, useNavigate } from "react-router-dom";
 import Account from "./components/Account";
-// import Header from "./components/Header";
 import Course from "./components/Course";
 import NotFound from "./components/NotFound";
 
-// function App() {
-//   return (
-//     <div className="app">
-//       <Header />
-//       <main className="main">
-//         <Routes>
-//           <Route path="/account" element={<Account />} />
-//           <Route path="/course" element={<Course />} />
-
-//           <Route path="*" element={<NotFound />} />
-//         </Routes>
-//       </main>
-//     </div>
-//   );
-// }
-
-// export default App;
-
-import { Breadcrumb, Layout, Menu, theme } from "antd";
+import { Layout, Menu, theme } from "antd";
 import { useState } from "react";
-import Home from "./components/Home";
 import Choise from "./components/Choise";
+import Home from "./components/Home";
+import Subject from "./components/Subject";
 const { Header, Content, Footer } = Layout;
+
 const App = () => {
   const {
     token: { colorBgContainer },
@@ -40,7 +23,7 @@ const App = () => {
     { key: "account", label: "Người dùng" },
     { key: "course", label: "Câu hỏi" },
     { key: "choise", label: "Câu trả lời" },
-    // Cũng phải thêm {key:"todolist", label:"ABC"} vào đây
+    { key: "subject", label: "Môn thi" },
   ];
 
   const onClick = (e) => {
@@ -86,6 +69,7 @@ const App = () => {
             <Route path="/account" element={<Account />} />
             <Route path="/course" element={<Course />} />
             <Route path="/choise" element={<Choise />} />
+            <Route path="/subject" element={<Subject />} />
 
             <Route path="*" element={<NotFound />} />
           </Routes>
