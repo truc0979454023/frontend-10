@@ -6,9 +6,14 @@ import NotFound from "./components/NotFound";
 import { Layout, Menu, theme } from "antd";
 import { useState } from "react";
 import Choise from "./components/Choise";
+import ExamLogin from "./components/ExamLogin";
 import Home from "./components/Home";
 import Subject from "./components/Subject";
+import SubjectChoise from "./components/SubjectChoise";
 import SubjectDescription from "./components/SubjectDescription";
+import Exam from "./components/ExamSubject";
+import ExamSubject from "./components/ExamSubject";
+import ExamTest from "./components/ExamTest";
 const { Header, Content, Footer } = Layout;
 
 const App = () => {
@@ -22,9 +27,10 @@ const App = () => {
 
   const dataMenu = [
     { key: "account", label: "Người dùng" },
-    { key: "course", label: "Câu hỏi" },
-    { key: "choise", label: "Câu trả lời" },
+    // { key: "course", label: "Câu hỏi" },
+    { key: "choise", label: "Câu hỏi" },
     { key: "subject", label: "Môn thi" },
+    { key: "exam-login", label: "Dự thi" },
   ];
 
   const onClick = (e) => {
@@ -70,7 +76,11 @@ const App = () => {
             <Route path="/account" element={<Account />} />
             <Route path="/course" element={<Course />} />
             <Route path="/choise" element={<Choise />} />
+            <Route path="/subject-choise" element={<SubjectChoise />} />
             <Route path="subject" element={<Subject />}></Route>
+            <Route path="/exam-login" element={<ExamLogin />}></Route>
+            <Route path="/exam-subject" element={<ExamSubject />}></Route>
+            <Route path="/exam-test" element={<ExamTest />}></Route>
             <Route
               path="subject-description"
               element={<SubjectDescription />}

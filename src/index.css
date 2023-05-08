@@ -74,6 +74,7 @@ code {
   width: 100%;
   justify-content: flex-start;
   gap: 24px;
+  flex-wrap: wrap;
 }
 
 .table .form .form-item {
