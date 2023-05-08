@@ -8,12 +8,9 @@ const SubjectChoise = () => {
   const [questions, setQuestions] = useState([]);
   const [questionsByTestCode, setQuestionsByTestCode] = useState([]);
   const [tests, setTests] = useState([]);
-  const [subject, setSubject] = useState({});
   //   Tạo biến callback và setCallback để xét lại danh sách các môn thi
   const [callBack, setCallBack] = useState(true);
   //   Tạo biến để chứa dữ liệu cập nhật môn thi
-  const [dataUpdate, setDataUpdate] = useState(null);
-  //   Tạo biến để bắt quá trình lấy dữ liệu
   const [loading, setLoading] = useState(false);
 
   const [form] = Form.useForm();
@@ -47,7 +44,6 @@ const SubjectChoise = () => {
         setLoading(true);
         // gọi api lây danh sách các môn thi
         const res = await axios.get(`/question/list-question`);
-        console.log(res);
         setLoading(false);
         setQuestions(
           res.data.data.reduce(
@@ -85,7 +81,6 @@ const SubjectChoise = () => {
 
   //   hàm tạo và cập nhật môn thi có tham số đầu vào là dữ liệu môn thi muôn thêm
   const handleCreateSubject = async (data) => {
-    console.log(data);
     try {
       let res;
       // dataUpdate nếu có dữ liệu thì chạy hàm cập nhật còn không có dữ liệu chạy hàm tạo
@@ -98,15 +93,9 @@ const SubjectChoise = () => {
     } catch (error) {}
   };
 
-  //   Hàm giúp truyền dữ liệu muốn cập nhật vô form và xét dữ liệu
-  const handleUpdateSubject = (record) => {
-    form.setFieldsValue(record);
-    setDataUpdate(record);
-  };
   // Hàm giúp xóa dữ liệu trong form
   const handleReset = () => {
     form.resetFields();
-    setDataUpdate(null);
   };
 
   //   biến khai báo cái cột của table
@@ -138,7 +127,6 @@ const SubjectChoise = () => {
       width: 200,
       render: (_, record) => (
         <Space>
-          <Button onClick={() => handleUpdateSubject(record)}>Sửa</Button>
           <Button onClick={() => handleDeleteSubject(record)}>Xóa</Button>
         </Space>
       ),
@@ -181,7 +169,7 @@ const SubjectChoise = () => {
         <Form.Item>
           <div style={{ display: "flex", gap: "8px" }}>
             <Button disabled={loading} type="primary" htmlType="submit">
-              {dataUpdate ? "Cập nhật" : "Thêm"}
+              Thêm
             </Button>
             <Button onClick={handleReset}>Làm mới</Button>
           </div>

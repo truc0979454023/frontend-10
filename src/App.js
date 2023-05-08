@@ -7,13 +7,12 @@ import { Layout, Menu, theme } from "antd";
 import { useState } from "react";
 import Choise from "./components/Choise";
 import ExamLogin from "./components/ExamLogin";
+import ExamSubject from "./components/ExamSubject";
+import ExamTest from "./components/ExamTest";
 import Home from "./components/Home";
 import Subject from "./components/Subject";
 import SubjectChoise from "./components/SubjectChoise";
 import SubjectDescription from "./components/SubjectDescription";
-import Exam from "./components/ExamSubject";
-import ExamSubject from "./components/ExamSubject";
-import ExamTest from "./components/ExamTest";
 const { Header, Content, Footer } = Layout;
 
 const App = () => {

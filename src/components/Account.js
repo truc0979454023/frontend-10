@@ -12,6 +12,7 @@ const Account = () => {
     name: "",
     age: 0,
   });
+  const [isUpdate, setIsUpdate] = useState(false);
 
   useEffect(() => {
     axios
@@ -72,6 +73,7 @@ const Account = () => {
   };
 
   const handleUpdateAccount = (account) => {
+    setIsUpdate(true);
     setAccountData({
       ...accountData,
       pw: account.Account.pw,
@@ -97,6 +99,7 @@ const Account = () => {
       })
       .then(function (response) {
         // handle success
+        setIsUpdate(false);
         setCallBack(!callBack);
       })
       .catch(function (error) {
@@ -107,7 +110,6 @@ const Account = () => {
         // always executed
       });
   };
-
   return (
     <div className="table">
       <h2>Danh sách Account</h2>
@@ -115,6 +117,7 @@ const Account = () => {
         <div className="form-item">
           <label htmlFor="id">Mã</label>
           <input
+            disabled={isUpdate}
             id="id"
             name="candicateCode"
             onChange={handleChangeInput}
@@ -143,6 +146,7 @@ const Account = () => {
           <label htmlFor="username">Username</label>
           <input
             id="username"
+            disabled={isUpdate}
             name="us"
             onChange={handleChangeInput}
             value={accountData.us}
@@ -173,7 +177,7 @@ const Account = () => {
         </tr>
         {accounts.map((account) => (
           <tr key={account.us}>
-            <td>{account.Candicate.us}</td>
+            <td>{account.Candicate.candicateCode}</td>
             <td>{account.Candicate.name}</td>
             <td>{account.Candicate.age}</td>
             <td>{account.Account.us}</td>

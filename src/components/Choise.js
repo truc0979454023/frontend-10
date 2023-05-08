@@ -132,7 +132,7 @@ const Choise = () => {
       (arr, data) => (data.check ? (arr = [...arr, data.id]) : arr),
       []
     );
-    console.log(dataSendDelete);
+
     try {
       // gọi api xóa danh sách các môn thi
       const res = isDeleteModalItem
@@ -168,16 +168,18 @@ const Choise = () => {
       dataIndex: "point",
       key: "point",
     },
+    // Show các đáp án của câu hỏi
     {
       title: "Đáp án",
-      dataIndex: "point",
-      key: "point",
-      render: (_, { choice }) => {
+      dataIndex: "choice",
+      key: "choice",
+      render: (_, record) => {
         return (
           <>
-            {choice.map((data) => (
+            {record.choice.map((data) => (
               <p>{data.title + ": " + data.anwser}</p>
             ))}
+            {/* {JSON.stringify(record.choice)} */}
           </>
         );
       },
@@ -192,7 +194,6 @@ const Choise = () => {
           <Button onClick={() => handleUpdateSubject(record)}>Sửa</Button>
           <Button onClick={() => handleDeleteSubject(record)}>Xóa</Button>
           <Button onClick={() => showModal(record)}>Thêm đáp án</Button>
-          {/* <Button onClick={() => showModal(record)}>Thêm đáp án</Button> */}
           <Button
             onClick={() => {
               setIsDeleteModalItem(true);
@@ -265,7 +266,7 @@ const Choise = () => {
                       block
                       icon={<PlusOutlined />}
                     >
-                      Add field
+                      Thêm đáp án
                     </Button>
                   </Form.Item>
                 )}
@@ -279,6 +280,7 @@ const Choise = () => {
           </Form.Item>
         </Form>
       </Modal>
+
       <Form
         layout="inline"
         form={form}

@@ -58,67 +58,71 @@ const ExamTest = () => {
 
   return (
     <div>
-      <Form
-        name="basic"
-        layout="vertical"
-        labelCol={{
-          span: 8,
-        }}
-        wrapperCol={{
-          span: 16,
-        }}
-        style={{
-          maxWidth: 600,
-        }}
-        initialValues={{
-          remember: true,
-        }}
-        onFinish={onFinish}
-        autoComplete="off"
-      >
-        <List
-          className="demo-loadmore-list"
-          loading={loading}
-          itemLayout="horizontal"
-          dataSource={tests}
-          renderItem={(item, index) => (
-            <List.Item>
-              Câu {index + 1} : {item.question?.question}
-              <Form.Item
-                style={{
-                  margin: 0,
-                  padding: 0,
-                }}
-                layout={""}
-                label="Điền/Chọn đáp án:"
-                name={`${item.question.questionCode}`}
-              >
-                {item.choise.length ? (
-                  <Radio.Group disabled={loading}>
-                    <Space direction="vertical">
-                      {item.choise.map((data) => {
-                        return <Radio value={data.anwser}>{data.anwser}</Radio>;
-                      })}
-                    </Space>
-                  </Radio.Group>
-                ) : (
-                  <Input disabled={loading} />
-                )}
-              </Form.Item>
-            </List.Item>
-          )}
-        />
-        <Form.Item style={{ marginTop: "12px" }}>
-          <Button
-            disabled={loading}
-            loading={loading}
-            type="primary"
-            htmlType="submit"
-          >
-            Submit
-          </Button>
-        </Form.Item>
-      </Form>
+      {tests && (
+        <Form
+          name="basic"
+          layout="vertical"
+          labelCol={{
+            span: 8,
+          }}
+          wrapperCol={{
+            span: 16,
+          }}
+          style={{
+            maxWidth: 600,
+          }}
+          initialValues={{
+            remember: true,
+          }}
+          onFinish={onFinish}
+          autoComplete="off"
+        >
+          <List
+            className="demo-loadmore-list"
+            // loading={loading}
+            itemLayout="horizontal"
+            dataSource={tests}
+            renderItem={(item, index) => (
+              <List.Item>
+                Câu {index + 1} : {item.question?.question}
+                <Form.Item
+                  style={{
+                    margin: 0,
+                    padding: 0,
+                  }}
+                  layout={""}
+                  label="Điền/Chọn đáp án:"
+                  name={`${item.question.questionCode}`}
+                >
+                  {item.choise.length ? (
+                    <Radio.Group disabled={loading}>
+                      <Space direction="vertical">
+                        {item.choise.map((data) => {
+                          return (
+                            <Radio value={data.anwser}>{data.anwser}</Radio>
+                          );
+                        })}
+                      </Space>
+                    </Radio.Group>
+                  ) : (
+                    <Input disabled={loading} />
+                  )}
+                </Form.Item>
+              </List.Item>
+            )}
+          />
+          <Form.Item style={{ marginTop: "12px" }}>
+            <Button
+              disabled={loading}
+              loading={loading}
+              type="primary"
+              htmlType="submit"
+            >
+              Submit
+            </Button>
+          </Form.Item>
+        </Form>
+      )}
     </div>
   );
 };
