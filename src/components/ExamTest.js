@@ -9,6 +9,7 @@ const ExamTest = () => {
   const [loading, setLoading] = useState(false);
   const [examCode, setExamCode] = useState();
   const navigate = useNavigate();
+
   useEffect(() => {
     async function fetchData() {
       try {
@@ -18,6 +19,8 @@ const ExamTest = () => {
           maDeThi: Cookies.get("maDeThi"),
         });
         if (res.data.status_code === 204) {
+          navigate("/exam-subject");
+
           message.error(res.data.detail);
         }
         setTests(res.data.data.question);
@@ -28,18 +31,20 @@ const ExamTest = () => {
   }, []);
 
   const onFinish = async (data) => {
+    console.log(data);
     const dataSend = Object.values(data).reduce(
       (arr, d, index) =>
         (arr = [
           ...arr,
           {
-            anwser: d,
+            anwser: d || "",
             examCode,
             questionCode: Number(Object.keys(data)[index]),
           },
         ]),
       []
     );
+    console.log(dataSend);
     try {
       setLoading(true);
       const res = await axios.post("/exam/save-exam", dataSend);
@@ -50,6 +55,7 @@ const ExamTest = () => {
       message.success(
         res.data.detail + ". Kết quả thi : " + res.data.data + " điểm"
       );
+
       Cookies.remove("subject_code");
       Cookies.remove("maDeThi");
       navigate("/exam-subject");

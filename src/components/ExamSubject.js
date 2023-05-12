@@ -35,7 +35,9 @@ const ExamSubject = () => {
       const res = await axios.get(
         `/exam question/detail-subject-exam-question/${id}`
       );
-
+      console.log(
+        res.data.data.deThi[getRandomInt(res.data.data.deThi.length)].maDeThi
+      );
       setLoading(false);
       Cookies.set("subject_code", id);
       Cookies.set(
@@ -53,6 +55,7 @@ const ExamSubject = () => {
     Cookies.remove("candicateCode");
     navigate("/exam-login");
   };
+
   return (
     <div>
       <div
@@ -74,7 +77,7 @@ const ExamSubject = () => {
         <Button onClick={handleLogout}>Đăng xuất</Button>
       </div>
 
-      <List
+      {/* <List
         className="demo-loadmore-list"
         loading={loading}
         itemLayout="horizontal"
@@ -87,6 +90,30 @@ const ExamSubject = () => {
                 key="list-loadmore-more"
               >
                 Tham gia thi
+              </Button>,
+            ]}
+          >
+            {item.subjectName}
+          </List.Item>
+        )}
+      /> */}
+      <List
+        size="small"
+        bordered
+        dataSource={subjects}
+        renderItem={(item) => (
+          <List.Item
+            actions={[
+              <Button
+                onClick={() => handleStart(item.subject_code)}
+                key="list-loadmore-more"
+              >
+                Tham gia thi
+              </Button>,
+              <Button key="list-loadmore-more">
+                <Link to={`/result?subject_code=${item.subject_code}`}>
+                  Xem đáp án
+                </Link>
               </Button>,
             ]}
           >

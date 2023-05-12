@@ -179,7 +179,6 @@ const Choise = () => {
             {record.choice.map((data) => (
               <p>{data.title + ": " + data.anwser}</p>
             ))}
-            {/* {JSON.stringify(record.choice)} */}
           </>
         );
       },

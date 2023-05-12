@@ -1,4 +1,4 @@
-import { Route, Routes, useNavigate } from "react-router-dom";
+import { Route, Routes, useLocation, useNavigate } from "react-router-dom";
 import Account from "./components/Account";
 import Course from "./components/Course";
 import NotFound from "./components/NotFound";
@@ -13,6 +13,7 @@ import Home from "./components/Home";
 import Subject from "./components/Subject";
 import SubjectChoise from "./components/SubjectChoise";
 import SubjectDescription from "./components/SubjectDescription";
+import Result from "./components/Result";
 const { Header, Content, Footer } = Layout;
 
 const App = () => {
@@ -21,8 +22,11 @@ const App = () => {
   } = theme.useToken();
 
   const navigate = useNavigate();
-
-  const [current, setCurrent] = useState("account");
+  const location = useLocation();
+  const [current, setCurrent] = useState(
+    location.pathname.split("/")[location.pathname.split("/").length - 1] ||
+      "account"
+  );
 
   const dataMenu = [
     { key: "account", label: "Người dùng" },
@@ -43,7 +47,7 @@ const App = () => {
         <Menu
           theme="dark"
           mode="horizontal"
-          defaultSelectedKeys={["2"]}
+          defaultSelectedKeys={["subject"]}
           items={dataMenu}
           onClick={onClick}
           selectedKeys={[current]}
@@ -80,6 +84,7 @@ const App = () => {
             <Route path="/exam-login" element={<ExamLogin />}></Route>
             <Route path="/exam-subject" element={<ExamSubject />}></Route>
             <Route path="/exam-test" element={<ExamTest />}></Route>
+            <Route path="/result" element={<Result />}></Route>
             <Route
               path="subject-description"
               element={<SubjectDescription />}
